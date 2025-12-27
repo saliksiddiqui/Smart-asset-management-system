@@ -17,7 +17,7 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signupUser(form));
-    navigate("/login");
+    navigate(`/${form.role}`, { replace: true });
   };
 
   return (

@@ -9,6 +9,7 @@ const userSlice = createSlice({
   reducers: {
     signupUser: (state, action) => {
       state.users.push(action.payload);
+      state.currentUser = action.payload; 
     },
     loginUser: (state, action) => {
       state.currentUser = action.payload;

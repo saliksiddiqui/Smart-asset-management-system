@@ -7,22 +7,26 @@ export default function Login() {
   const { users } = useSelector((s) => s.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setError]=useState("")
-  
 
-  const [cred, setCred] = useState({ username: "", email: "" });
+  const [cred, setCred] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = (e) => {
     e.preventDefault();
+
     const found = users.find(
-      (u) => u.username === cred.username && u.email === cred.email
+      (u) => u.email === cred.email && u.password === cred.password
     );
 
-    if (!found) return setError("User not found");
+    if (!found) {
+      alert("Invalid email or password");
+      return;
+    }
 
     dispatch(loginUser(found));
-navigate(`/${found.role}`, { replace: true });
-
+    navigate(`/${found.role}`, { replace: true });
   };
 
   return (
@@ -35,20 +39,19 @@ navigate(`/${found.role}`, { replace: true });
 
         <input
           className="w-full border p-2 rounded"
-          placeholder="Username"
-          required
-          onChange={(e) => setCred({ ...cred, username: e.target.value })}
-        />
-
-        <input
-          className="w-full border p-2 rounded"
           type="email"
           placeholder="Email"
           required
           onChange={(e) => setCred({ ...cred, email: e.target.value })}
         />
 
-        {error && <p className="text-red-500">{error}</p>}
+        <input
+          className="w-full border p-2 rounded"
+          type="password"
+          placeholder="Password"
+          required
+          onChange={(e) => setCred({ ...cred, password: e.target.value })}
+        />
 
         <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
           Login
