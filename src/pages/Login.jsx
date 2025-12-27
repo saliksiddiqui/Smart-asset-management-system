@@ -7,6 +7,7 @@ export default function Login() {
   const { users } = useSelector((s) => s.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError]=useState('');
 
   const [cred, setCred] = useState({
     email: "",
@@ -21,7 +22,7 @@ export default function Login() {
     );
 
     if (!found) {
-      alert("Invalid email or password");
+      setError("Invalid email or password");
       return;
     }
 
@@ -52,7 +53,7 @@ export default function Login() {
           required
           onChange={(e) => setCred({ ...cred, password: e.target.value })}
         />
-
+         {error && <p className="text-red-500">{error}</p>}
         <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
           Login
         </button>
